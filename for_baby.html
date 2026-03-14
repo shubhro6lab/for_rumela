@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Rumela ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+text-align:center;
+overflow-x:hidden;
+color:white;
+}
+
+.container{
+padding:20px;
+max-width:1000px;
+margin:auto;
+position:relative;
+z-index:2;
+}
+
+h1{
+font-weight:700;
+font-size:42px;
+margin-top:20px;
+}
+
+.subtitle{
+margin-top:10px;
+font-size:18px;
+font-weight:600;
+}
+
+/* gallery */
+
+.gallery{
+margin-top:40px;
+display:grid;
+grid-template-columns:1fr;
+gap:20px;
+}
+
+.gallery img{
+width:100%;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+transition:transform 0.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+@media(min-width:700px){
+.gallery{
+grid-template-columns:repeat(3,1fr);
+}
+}
+
+/* cake */
+
+.cake{
+font-size:90px;
+margin-top:30px;
+cursor:pointer;
+}
+
+.cakeText{
+font-size:18px;
+margin-top:5px;
+}
+
+/* message */
+
+.message{
+margin-top:50px;
+padding:25px;
+background:rgba(255,255,255,0.15);
+border-radius:20px;
+backdrop-filter:blur(10px);
+font-size:20px;
+line-height:1.8;
+font-weight:600;
+white-space:pre-line;
+}
+
+/* popup */
+
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:white;
+color:#ff4d6d;
+padding:40px;
+border-radius:20px;
+font-size:35px;
+font-weight:700;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+transition:0.5s;
+z-index:5;
+}
+
+.popup.show{
+transform:translate(-50%,-50%) scale(1);
+}
+
+.tapLove{
+margin-top:30px;
+font-size:20px;
+cursor:pointer;
+font-weight:700;
+}
+
+/* floating hearts */
+
+.heart{
+position:fixed;
+bottom:-10px;
+font-size:20px;
+animation:floatHearts 8s linear infinite;
+}
+
+@keyframes floatHearts{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-100vh);opacity:0;}
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+footer{
+margin-top:30px;
+font-weight:600;
+}
+
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="confetti"></canvas>
+<canvas id="fireworks"></canvas>
+
+<div class="container">
+
+<h1>Happy 18th Birthday Rumela ❤️</h1>
+<p class="subtitle">A little surprise made with love</p>
+
+<div class="gallery">
+<img src="pic1.jpg">
+<img src="pic2.jpg">
+<img src="pic3.jpg">
+</div>
+
+<div class="cake" id="cake">🎂</div>
+<p class="cakeText">Tap the cake to blow candles</p>
+
+<div class="tapLove" onclick="showLove()">Tap here for a surprise ❤️</div>
+
+<div class="message">
+
+Happy 18th Birthday, Rumela Gupta ❤️
+
+Today is such a special day because the most beautiful soul I know turns eighteen. I still feel lucky every day coz i have the privilege of calling you mine. You didn’t just enter my life, you changed it completely
+Rumela, however hectic my days become, you are the reason why my nights feel calmer. Your smile can fix the everything, your voice feels like therapy, and the little things you do makes you my world. I never imagined I'll love a girl this much.  On your birthday, I just want you to know one thing, no matter where life takes us, I will always be here loving you, supporting you, and cheering for you. You are not just my girlfriend, you are my happiness, my peace, and the most precious part of my life.
+
+Happy 18th birthday once again, my baby. 
+I love you, Rumela. Always. ❤️
+
+</div>
+
+<footer>Made with ❤️ for Rumela</footer>
+
+</div>
+
+<div class="popup" id="popup">
+I Love You Always ❤️
+</div>
+
+<script>
+
+/* floating hearts */
+
+function createHeart(){
+let heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*25+15)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{heart.remove();},8000);
+}
+
+setInterval(createHeart,400);
+
+
+/* confetti */
+
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let pieces=[];
+
+for(let i=0;i<120;i++){
+pieces.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*6+2,
+speed:Math.random()*3+1
+});
+}
+
+function update(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+pieces.forEach(p=>{
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+ctx.fill();
+
+p.y+=p.speed;
+
+if(p.y>canvas.height){
+p.y=0;
+p.x=Math.random()*canvas.width;
+}
+
+});
+
+requestAnimationFrame(update);
+}
+
+update();
+
+
+/* fireworks */
+
+const fcanvas=document.getElementById("fireworks");
+const fctx=fcanvas.getContext("2d");
+
+fcanvas.width=window.innerWidth;
+fcanvas.height=window.innerHeight;
+
+function firework(power=30){
+
+let x=Math.random()*fcanvas.width;
+let y=Math.random()*fcanvas.height/2;
+
+for(let i=0;i<power;i++){
+
+let angle=Math.random()*2*Math.PI;
+let speed=Math.random()*6;
+
+let dx=Math.cos(angle)*speed;
+let dy=Math.sin(angle)*speed;
+
+fctx.beginPath();
+fctx.arc(x+dx*10,y+dy*10,2,0,Math.PI*2);
+fctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+fctx.fill();
+}
+
+}
+
+setInterval(()=>{
+fctx.clearRect(0,0,fcanvas.width,fcanvas.height);
+firework();
+},700);
+
+
+/* cake click */
+
+const cake=document.getElementById("cake");
+
+cake.addEventListener("click",()=>{
+
+cake.innerHTML="🍰";
+
+for(let i=0;i<8;i++){
+setTimeout(()=>firework(120),i*300);
+}
+
+alert("Candles blown! Make a wish ❤️");
+
+});
+
+
+/* surprise popup */
+
+function showLove(){
+
+const popup=document.getElementById("popup");
+
+popup.classList.add("show");
+
+setTimeout(()=>{
+popup.classList.remove("show");
+},4000);
+
+}
+
+</script>
+
+</body>
+</html>
